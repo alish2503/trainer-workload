@@ -2,6 +2,7 @@ package com.trainerworkload.application.service.impl;
 
 import com.trainerworkload.application.request.TrainerWorkloadEventRequest;
 import com.trainerworkload.application.service.port.TrainerWorkloadService;
+import com.trainerworkload.domain.exception.EntityNotFoundException;
 import com.trainerworkload.domain.model.TrainerWorkload;
 import com.trainerworkload.domain.port.TrainerWorkloadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,13 @@ public class TrainerWorkloadServiceImpl implements TrainerWorkloadService {
         boolean isAdd = event.actionType().equals("ADD");
         trainerWorkload.updateWorkload(year, month, event.duration(), isAdd);
         repository.save(trainerWorkload);
+    }
+
+    @Override
+    public int getMonthlyHours(String username, int year, int month) {
+        TrainerWorkload workload = repository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException(
+                "No trainer found with username: " + username
+        ));
+        return workload.getMonthlySummary().get(year).get(month);
     }
 }

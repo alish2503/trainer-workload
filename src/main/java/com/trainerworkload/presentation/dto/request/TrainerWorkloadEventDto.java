@@ -1,4 +1,4 @@
-package com.trainerworkload.presentation.dto;
+package com.trainerworkload.presentation.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;

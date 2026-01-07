@@ -1,7 +1,7 @@
 package com.trainerworkload.presentation.mapper;
 
 import com.trainerworkload.application.request.TrainerWorkloadEventRequest;
-import com.trainerworkload.presentation.dto.TrainerWorkloadEventDto;
+import com.trainerworkload.presentation.dto.request.TrainerWorkloadEventDto;
 
 public class TrainerWorkloadDtoMapper {
     private TrainerWorkloadDtoMapper(){}

@@ -4,4 +4,5 @@ import com.trainerworkload.application.request.TrainerWorkloadEventRequest;
 
 public interface TrainerWorkloadService {
     void handleEvent(TrainerWorkloadEventRequest event);
+    int getMonthlyHours(String username, int year, int month);
 }
