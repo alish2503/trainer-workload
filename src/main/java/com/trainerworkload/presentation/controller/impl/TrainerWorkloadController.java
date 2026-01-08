@@ -37,5 +37,4 @@ public class TrainerWorkloadController implements TrainerWorkloadControllerApi {
         int hours = trainerWorkloadService.getMonthlyHours(username, year, month);
         return new TrainerMonthlyWorkloadDto(username, year, month, hours);
     }
-
 }
