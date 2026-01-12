@@ -9,5 +9,4 @@ public class TrainerWorkloadApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TrainerWorkloadApplication.class, args);
 	}
-
 }
