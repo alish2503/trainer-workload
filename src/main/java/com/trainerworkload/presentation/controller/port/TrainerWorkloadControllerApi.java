@@ -19,7 +19,7 @@ public interface TrainerWorkloadControllerApi {
                     " and updates the trainer's monthly workload"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Workload event successfully processed"),
+            @ApiResponse(responseCode = "200", description = "Workload event successfully processed"),
             @ApiResponse(responseCode = "400", description = "Invalid request data"),
             @ApiResponse(responseCode = "401", description = "Invalid token"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),

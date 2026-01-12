@@ -25,9 +25,9 @@ public class TrainerWorkloadController implements TrainerWorkloadControllerApi {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public void registerTrainerWorkloadEvent(@RequestBody TrainerWorkloadEventDto trainerWorkloadEventDto) {
-        trainerWorkloadService.handleEvent(TrainerWorkloadDtoMapper.toCommand(trainerWorkloadEventDto));
+        trainerWorkloadService.updateWorkload(TrainerWorkloadDtoMapper.toCommand(trainerWorkloadEventDto));
     }
 
     @GetMapping("/{username}")

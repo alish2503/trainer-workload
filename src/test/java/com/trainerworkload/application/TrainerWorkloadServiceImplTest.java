@@ -1,5 +1,6 @@
 package com.trainerworkload.application;
 
+import com.trainerworkload.application.request.ActionType;
 import com.trainerworkload.application.request.TrainerWorkloadEventRequest;
 import com.trainerworkload.application.service.impl.TrainerWorkloadServiceImpl;
 import com.trainerworkload.domain.exception.EntityNotFoundException;
@@ -33,10 +34,10 @@ class TrainerWorkloadServiceImplTest {
     void createsNewTrainerWorkloadWhenTrainerDoesNotExist() {
         TrainerWorkloadEventRequest event = new TrainerWorkloadEventRequest(
                 "trainer1", "John", "Doe", true,
-                LocalDate.of(2023, 10, 1), 1,"ADD");
+                LocalDate.of(2023, 10, 1), 1,ActionType.ADD);
 
         when(repository.findByUsername("trainer1")).thenReturn(Optional.empty());
-        service.handleEvent(event);
+        service.updateWorkload(event);
         verify(repository).save(argThat(workload ->
                 workload.getUsername().equals("trainer1") &&
                         workload.getFirstName().equals("John") &&
@@ -52,10 +53,10 @@ class TrainerWorkloadServiceImplTest {
 
         TrainerWorkloadEventRequest event = new TrainerWorkloadEventRequest(
                 "trainer1", "John", "Doe", true,
-                LocalDate.of(2023, 10, 1), 2, "ADD");
+                LocalDate.of(2023, 10, 1), 2, ActionType.ADD);
 
         when(repository.findByUsername("trainer1")).thenReturn(Optional.of(existingWorkload));
-        service.handleEvent(event);
+        service.updateWorkload(event);
         verify(repository).save(existingWorkload);
         assertEquals(2, existingWorkload.getMonthlySummary().get(2023).get(10));
     }
@@ -68,10 +69,10 @@ class TrainerWorkloadServiceImplTest {
         existingWorkload.updateWorkload(2023, 10, 3, true);
         TrainerWorkloadEventRequest event = new TrainerWorkloadEventRequest(
                 "trainer1", "John", "Doe", true,
-                LocalDate.of(2023, 10, 1), 1,"REMOVE");
+                LocalDate.of(2023, 10, 1), 1, ActionType.DELETE);
 
         when(repository.findByUsername("trainer1")).thenReturn(Optional.of(existingWorkload));
-        service.handleEvent(event);
+        service.updateWorkload(event);
         verify(repository).save(existingWorkload);
         assertEquals(2, existingWorkload.getMonthlySummary().get(2023).get(10));
     }

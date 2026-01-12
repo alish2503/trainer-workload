@@ -1,6 +1,7 @@
 package com.trainerworkload.presentation.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.trainerworkload.application.request.ActionType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,7 +33,7 @@ public record TrainerWorkloadEventDto(
 
         @Schema(example = "false")
         @NotNull(message = "Activity cannot be null")
-        Boolean active,
+        Boolean isActive,
 
         @Schema(example = "2026-10-10")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -41,7 +42,7 @@ public record TrainerWorkloadEventDto(
 
         @Schema(example = "80")
         @Positive(message = "Duration must be positive")
-        int duration,
+        int durationInHours,
 
         @Schema(example = "ADD")
         @NotNull(message = "Action type cannot be blank")

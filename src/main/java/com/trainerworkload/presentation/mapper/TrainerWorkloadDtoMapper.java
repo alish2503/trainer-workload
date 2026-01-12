@@ -11,10 +11,10 @@ public class TrainerWorkloadDtoMapper {
                 trainerWorkloadEventDto.username(),
                 trainerWorkloadEventDto.firstName(),
                 trainerWorkloadEventDto.lastName(),
-                trainerWorkloadEventDto.active(),
+                trainerWorkloadEventDto.isActive(),
                 trainerWorkloadEventDto.date(),
-                trainerWorkloadEventDto.duration(),
-                trainerWorkloadEventDto.actionType().name()
+                trainerWorkloadEventDto.durationInHours(),
+                trainerWorkloadEventDto.actionType()
         );
     }
 }

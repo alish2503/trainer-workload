@@ -3,7 +3,7 @@ package com.trainerworkload.presentation.controller;
 import com.trainerworkload.application.request.TrainerWorkloadEventRequest;
 import com.trainerworkload.application.service.port.TrainerWorkloadService;
 import com.trainerworkload.presentation.controller.impl.TrainerWorkloadController;
-import com.trainerworkload.presentation.dto.request.ActionType;
+import com.trainerworkload.application.request.ActionType;
 import com.trainerworkload.presentation.dto.request.TrainerWorkloadEventDto;
 import com.trainerworkload.presentation.dto.response.TrainerMonthlyWorkloadDto;
 import org.junit.jupiter.api.Test;
@@ -31,10 +31,10 @@ class TrainerWorkloadControllerTest {
                 true, null, 6, ActionType.ADD);
 
         TrainerWorkloadEventRequest command = new TrainerWorkloadEventRequest(null, null, null,
-                true, null, 6, "ADD");
+                true, null, 6, ActionType.ADD);
 
         trainerWorkloadController.registerTrainerWorkloadEvent(eventDto);
-        verify(trainerWorkloadService).handleEvent(command);
+        verify(trainerWorkloadService).updateWorkload(command);
     }
 
     @Test

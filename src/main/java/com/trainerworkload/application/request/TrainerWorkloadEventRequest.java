@@ -6,8 +6,8 @@ public record TrainerWorkloadEventRequest(
         String username,
         String firstName,
         String lastName,
-        boolean active,
+        boolean isActive,
         LocalDate date,
-        int duration,
-        String actionType
+        int durationInHours,
+        ActionType actionType
 ) {}

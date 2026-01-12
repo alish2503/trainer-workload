@@ -1,5 +1,6 @@
 package com.trainerworkload.application.service.impl;
 
+import com.trainerworkload.application.request.ActionType;
 import com.trainerworkload.application.request.TrainerWorkloadEventRequest;
 import com.trainerworkload.application.service.port.TrainerWorkloadService;
 import com.trainerworkload.domain.exception.EntityNotFoundException;
@@ -20,20 +21,20 @@ public class TrainerWorkloadServiceImpl implements TrainerWorkloadService {
     }
 
     @Override
-    public void handleEvent(TrainerWorkloadEventRequest event) {
+    public void updateWorkload(TrainerWorkloadEventRequest event) {
         TrainerWorkload trainerWorkload = repository.findByUsername(event.username())
                 .orElseGet(() -> new TrainerWorkload(
                         event.username(),
                         event.firstName(),
                         event.lastName(),
-                        event.active()
+                        event.isActive()
                 ));
 
         LocalDate date = event.date();
         int year = date.getYear();
         int month = date.getMonthValue();
-        boolean isAdd = event.actionType().equals("ADD");
-        trainerWorkload.updateWorkload(year, month, event.duration(), isAdd);
+        boolean isAdd = event.actionType().equals(ActionType.ADD);
+        trainerWorkload.updateWorkload(year, month, event.durationInHours(), isAdd);
         repository.save(trainerWorkload);
     }
 
