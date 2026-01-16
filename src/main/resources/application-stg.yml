@@ -1,0 +1,17 @@
+spring:
+  rabbitmq:
+    host: stg-rabbit.mycompany.com
+    port: 5672
+    username: stguser
+    password: stgpass
+    listener:
+      simple:
+        concurrency: 5
+        max-concurrency: 10
+
+logging:
+  level:
+    com.gymcrm: INFO
+    org.springframework: WARN
+    org.springframework.amqp.rabbit.core.RabbitAdmin: INFO
+    org.springframework.amqp.rabbit.connection: INFO

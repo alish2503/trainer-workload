@@ -1,0 +1,15 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: gymuser
+    password: pass
+    listener:
+      simple:
+        concurrency: 1
+        max-concurrency: 3
+
+logging:
+  level:
+    org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG
+    org.springframework.amqp.rabbit.connection: DEBUG

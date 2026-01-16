@@ -3,15 +3,6 @@ spring:
     open-in-view: false
   application:
     name: trainer-workload
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: gymuser
-    password: pass
-    listener:
-      simple:
-        concurrency: 3
-        max-concurrency: 10
 
 logging:
   pattern:
@@ -23,10 +14,6 @@ security:
 
 server:
   port: 8081
-
-springdoc:
-  swagger-ui:
-    supported-submit-methods: []
 
 queue-name: "trainer-workload"
 dlq-name: "trainer-workload-dlq"

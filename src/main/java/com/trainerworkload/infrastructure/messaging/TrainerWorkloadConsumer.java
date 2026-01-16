@@ -1,4 +1,4 @@
-package com.trainerworkload.infrastructure.messaging.consumer;
+package com.trainerworkload.infrastructure.messaging;
 
 import com.trainerworkload.application.event.TrainerWorkloadEvent;
 
