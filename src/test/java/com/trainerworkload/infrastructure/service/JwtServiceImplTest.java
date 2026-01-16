@@ -1,6 +1,6 @@
 package com.trainerworkload.infrastructure.service;
 
-import com.trainerworkload.infrastructure.security.impl.JwtServiceImpl;
+import com.trainerworkload.infrastructure.security.service.impl.JwtServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;

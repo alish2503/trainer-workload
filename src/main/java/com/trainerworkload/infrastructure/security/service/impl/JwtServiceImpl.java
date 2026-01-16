@@ -1,6 +1,6 @@
-package com.trainerworkload.infrastructure.security.impl;
+package com.trainerworkload.infrastructure.security.service.impl;
 
-import com.trainerworkload.infrastructure.security.port.JwtService;
+import com.trainerworkload.infrastructure.security.service.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
@@ -14,11 +14,10 @@ import java.util.List;
 
 @Service
 public class JwtServiceImpl implements JwtService {
-    private final Key key;
     private final JwtParser parser;
 
     public JwtServiceImpl(@Value("${security.jwt.secret}") String secret) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        Key key = Keys.hmacShaKeyFor(secret.getBytes());
         this.parser = Jwts.parserBuilder().setSigningKey(key).build();
     }
 

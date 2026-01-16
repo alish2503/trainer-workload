@@ -1,7 +1,7 @@
 package com.trainerworkload.application;
 
-import com.trainerworkload.application.request.ActionType;
-import com.trainerworkload.application.request.TrainerWorkloadEventRequest;
+import com.trainerworkload.application.event.ActionType;
+import com.trainerworkload.application.event.TrainerWorkloadEvent;
 import com.trainerworkload.application.service.impl.TrainerWorkloadServiceImpl;
 import com.trainerworkload.domain.exception.EntityNotFoundException;
 import com.trainerworkload.domain.model.TrainerWorkload;
@@ -32,7 +32,7 @@ class TrainerWorkloadServiceImplTest {
 
     @Test
     void createsNewTrainerWorkloadWhenTrainerDoesNotExist() {
-        TrainerWorkloadEventRequest event = new TrainerWorkloadEventRequest(
+        TrainerWorkloadEvent event = new TrainerWorkloadEvent(
                 "trainer1", "John", "Doe", true,
                 LocalDate.of(2023, 10, 1), 1,ActionType.ADD);
 
@@ -51,7 +51,7 @@ class TrainerWorkloadServiceImplTest {
         TrainerWorkload existingWorkload = new TrainerWorkload("trainer1", "John",
                 "Doe", true);
 
-        TrainerWorkloadEventRequest event = new TrainerWorkloadEventRequest(
+        TrainerWorkloadEvent event = new TrainerWorkloadEvent(
                 "trainer1", "John", "Doe", true,
                 LocalDate.of(2023, 10, 1), 2, ActionType.ADD);
 
@@ -67,7 +67,7 @@ class TrainerWorkloadServiceImplTest {
                 "Doe", true);
 
         existingWorkload.updateWorkload(2023, 10, 3, true);
-        TrainerWorkloadEventRequest event = new TrainerWorkloadEventRequest(
+        TrainerWorkloadEvent event = new TrainerWorkloadEvent(
                 "trainer1", "John", "Doe", true,
                 LocalDate.of(2023, 10, 1), 1, ActionType.DELETE);
 
