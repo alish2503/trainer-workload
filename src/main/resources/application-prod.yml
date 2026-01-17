@@ -16,6 +16,7 @@ logging:
     org.springframework: WARN
     org.springframework.amqp.rabbit.core.RabbitAdmin: WARN
     org.springframework.amqp.rabbit.connection: WARN
+    org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler: ERROR
 
 springdoc:
   swagger-ui:

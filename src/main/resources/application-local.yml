@@ -13,3 +13,4 @@ logging:
   level:
     org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG
     org.springframework.amqp.rabbit.connection: DEBUG
+
