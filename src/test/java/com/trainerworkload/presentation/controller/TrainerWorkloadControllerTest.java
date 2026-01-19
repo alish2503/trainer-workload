@@ -1,10 +1,7 @@
 package com.trainerworkload.presentation.controller;
 
-import com.trainerworkload.application.request.TrainerWorkloadEventRequest;
-import com.trainerworkload.application.service.port.TrainerWorkloadService;
+import com.trainerworkload.application.service.TrainerWorkloadService;
 import com.trainerworkload.presentation.controller.impl.TrainerWorkloadController;
-import com.trainerworkload.application.request.ActionType;
-import com.trainerworkload.presentation.dto.request.TrainerWorkloadEventDto;
 import com.trainerworkload.presentation.dto.response.TrainerMonthlyWorkloadDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,18 +20,6 @@ class TrainerWorkloadControllerTest {
 
     @InjectMocks
     private TrainerWorkloadController trainerWorkloadController;
-
-    @Test
-    void registerTrainerWorkloadEvent_DelegatesToService() {
-        TrainerWorkloadEventDto eventDto = new TrainerWorkloadEventDto(null, null, null,
-                true, null, 6, ActionType.ADD);
-
-        TrainerWorkloadEventRequest command = new TrainerWorkloadEventRequest(null, null, null,
-                true, null, 6, ActionType.ADD);
-
-        trainerWorkloadController.registerTrainerWorkloadEvent(eventDto);
-        verify(trainerWorkloadService).updateWorkload(command);
-    }
 
     @Test
     void getWorkload_ReturnsCorrectWorkload() {

@@ -3,8 +3,7 @@
 ## Overview
 
 **Trainer Workload Service** is a Spring Boot–based microservice responsible for
-tracking and aggregating **trainers’ monthly workload**.
-
+tracking and aggregating **trainers’ monthly workload**. 
 The service is designed as a **supporting microservice** and is not intended to be
 accessed directly by end users.  
 It receives events from the main **Gym CRM System** and maintains workload
@@ -15,8 +14,6 @@ Key responsibilities:
 - Receive training workload events (add / remove)
 - Maintain monthly workload summaries per trainer
 - Provide aggregated workload data on demand
-- Secure inter-service communication using JWT
-- Register with Eureka for service discovery
 
 ---
 
@@ -43,13 +40,19 @@ Key responsibilities:
 
 ## Launch
 
-1. **Configure Eureka (`application.yml`)**:
+1. **Configure RabbitMQ**:
 
 ```properties
-eureka:
-    client:
-        service-url:
-            defaultZone: http://localhost:8761/eureka/
+spring:
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: gymuser
+        password: pass
+        listener:
+            simple:
+            concurrency: 1
+            max-concurrency: 3
 ```
 
 2. **Run the application**:
@@ -60,12 +63,12 @@ mvn spring-boot:run
 
 ## Inter-Service Communication
 
-This microservice is called by the **Gym CRM System** using REST.
+This microservice **consumes trainer workload events asynchronously** from the Gym CRM System via **RabbitMQ**.
 
-- Communication is performed via **Feign**
-- The service is discovered via **Eureka**
-- Requests are authenticated using **JWT service tokens**
-- Each request propagates a `transactionId` for distributed logging
+- Messages are sent in **JSON format** and represent training add/remove events.
+- Dead Letter Queue (DLQ) is used for messages with missing or invalid information.
+- Each message carries a `transactionId` for distributed tracing across microservices.
+- Optional GET endpoints can be called by authorized services using a **JWT service token** to retrieve aggregated trainer workload data.
 
 ---
 
@@ -73,10 +76,9 @@ This microservice is called by the **Gym CRM System** using REST.
 
 ### Service-to-Service Security
 
-- All endpoints are protected
-- Requests must include a valid **JWT service token**
-- Tokens are validated by a dedicated JWT filter
-- No user authentication or authorization logic is implemented
+- All REST endpoints (e.g., GET for aggregated data) are protected via JWT service tokens
+- Event consumption via RabbitMQ is validated for required fields and JWT headers if present
+- This service does **not** perform any user-facing authentication or authorization
 
 This service does **not** expose public endpoints.
 
@@ -92,8 +94,8 @@ This service does **not** expose public endpoints.
 
 ### API Capabilities
 
-- Receive trainer workload events
-- Retrieve monthly workload summary for a trainer
+- **GET endpoints** to retrieve monthly workload summary for a trainer (only accessible to authorized services via JWT)
+- **Event consumption** (ADD/DELETE) is handled **asynchronously via RabbitMQ**.
 
 ---
 
@@ -107,27 +109,54 @@ The service implements **transaction-based logging**:
 
 ---
 
+## Environments
+
+The project supports multiple Spring profiles (`local`, `dev`, `stg`, `prod`) for different environments.
+For this project, only the `local` profile is actively used; other profiles are present for demonstration purposes.
+
+---
+
+## RabbitMQ Management
+
+The Trainer Workload Service uses RabbitMQ for asynchronous message processing.  
+You can monitor queues, messages, and dead letter queues using the **RabbitMQ Management UI**:
+
+- URL: [http://localhost:15672](http://localhost:15672)
+- Default credentials (for local development):
+    - Username: `gymuser`
+    - Password: `pass`
+
+Through this interface you can:
+- Inspect messages in the `trainer-workload` queue
+- View messages moved to the Dead Letter Queue (DLQ)
+- Monitor consumer concurrency and message throughput
+- Manually publish or requeue messages if necessary
+
+---
+
 ## Project Structure
 
 ```
 com.trainerworkload
  ├─ application
- │   ├─ request     #helpers for handling incoming requests
- │   └─ service (port / impl) #Business logic
+ │   ├─ event       # Message events (TrainerWorkloadEvent)
+ │   ├─ request     # helpers for handling incoming requests
+ │   └─ service (impl) # Orchestrators of business use cases
  ├─ domain
- │   ├─ model       #Entities: TrainerWorkload
- │   ├─ exception   #Custom exceptions
- │   └─ port        #Repository interfaces
+ │   ├─ model       # Entities: TrainerWorkload
+ │   ├─ exception   # Custom exceptions
+ │   └─ port        # Repository interfaces
  ├─ infrastructure
- │   ├─ config      # Security
+ │   ├─ config      # RabbitMessageConverter, Security
  │   ├─ security    # JWT, filter
  │   ├─ logging     # Filter for transaction logging
  │   ├─ repository  # Repositories
  │   ├─ mapper      # Entity ↔ DAO mappers
+ │   ├─ messaging   # Consumers, exception handlers
  │   └─ dao         # DAO classes
  └─ presentation
      ├─ controller  # REST controllers
-     ├─ dto         # REST request/response DTOs
+     ├─ dto         # REST response DTOs
      ├─ mapper      # DTO ↔ Entity mappers
      └─ advice      # Global exception handling
 
@@ -155,9 +184,9 @@ mvn test
 5. SLF4J / Logback
 6. Swagger/OpenAPI
 7. Spring Web / Spring MVC 
-8. Spring Cloud Netflix Eureka Client 
-9. Jakarta Validation 
-10. Lombok
+8. Jakarta Validation 
+9. Lombok 
+10. Spring AMQP / RabbitMQ
 
 ---
 

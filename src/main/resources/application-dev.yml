@@ -1,0 +1,17 @@
+spring:
+  rabbitmq:
+    host: dev-rabbit.mycompany.com
+    port: 5672
+    username: devuser
+    password: devpass
+    listener:
+      simple:
+        concurrency: 3
+        max-concurrency: 5
+
+logging:
+  level:
+    com.gymcrm: DEBUG
+    org.springframework: INFO
+    org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG
+    org.springframework.amqp.rabbit.connection: DEBUG

@@ -1,8 +1,8 @@
 package com.trainerworkload.application.service.impl;
 
-import com.trainerworkload.application.request.ActionType;
-import com.trainerworkload.application.request.TrainerWorkloadEventRequest;
-import com.trainerworkload.application.service.port.TrainerWorkloadService;
+import com.trainerworkload.application.event.ActionType;
+import com.trainerworkload.application.event.TrainerWorkloadEvent;
+import com.trainerworkload.application.service.TrainerWorkloadService;
 import com.trainerworkload.domain.exception.EntityNotFoundException;
 import com.trainerworkload.domain.model.TrainerWorkload;
 import com.trainerworkload.domain.port.TrainerWorkloadRepository;
@@ -21,7 +21,7 @@ public class TrainerWorkloadServiceImpl implements TrainerWorkloadService {
     }
 
     @Override
-    public void updateWorkload(TrainerWorkloadEventRequest event) {
+    public void updateWorkload(TrainerWorkloadEvent event) {
         TrainerWorkload trainerWorkload = repository.findByUsername(event.username())
                 .orElseGet(() -> new TrainerWorkload(
                         event.username(),

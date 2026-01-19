@@ -2,7 +2,7 @@ package com.trainerworkload.presentation.advice;
 
 
 import com.trainerworkload.domain.exception.EntityNotFoundException;
-import com.trainerworkload.application.request.ActionType;
+import com.trainerworkload.application.event.ActionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

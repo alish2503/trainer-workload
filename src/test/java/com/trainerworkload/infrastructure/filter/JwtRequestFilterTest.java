@@ -1,7 +1,7 @@
 package com.trainerworkload.infrastructure.filter;
 
 import com.trainerworkload.infrastructure.security.filter.JwtRequestFilter;
-import com.trainerworkload.infrastructure.security.port.JwtService;
+import com.trainerworkload.infrastructure.security.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

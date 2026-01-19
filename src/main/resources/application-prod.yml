@@ -1,0 +1,23 @@
+spring:
+  rabbitmq:
+    host: rabbit.prod.mycompany.com
+    port: 5672
+    username: produser
+    password: prodpass
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 20
+
+logging:
+  level:
+    root: INFO
+    com.gymcrm: WARN
+    org.springframework: WARN
+    org.springframework.amqp.rabbit.core.RabbitAdmin: WARN
+    org.springframework.amqp.rabbit.connection: WARN
+    org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler: ERROR
+
+springdoc:
+  swagger-ui:
+    supported-submit-methods: []
