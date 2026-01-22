@@ -190,9 +190,9 @@ com.trainerworkload
  │   ├─ logging     # Filter for transaction logging
  │   └─ persistance
  │      ├─ adapter     # Adapters
- │      ├─ dao         # DAO classes
+ │      ├─ document    # Document classes
  │      ├─ mongorepo   # MongoRepositories
- │      └─ mapper      # Entity ↔ DAO mappers
+ │      └─ mapper      # Entity ↔ Document mappers
  └─ presentation
      ├─ controller  # REST controllers
      ├─ dto         # REST response DTOs

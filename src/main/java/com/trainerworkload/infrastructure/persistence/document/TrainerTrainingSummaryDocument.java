@@ -1,4 +1,4 @@
-package com.trainerworkload.infrastructure.persistence.dao;
+package com.trainerworkload.infrastructure.persistence.document;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @CompoundIndex(name = "trainer_name_idx", def = "{'trainerFirstName': 1, 'trainerLastName': 1}")
 @RequiredArgsConstructor
 @Getter
-public class TrainerTrainingSummaryDao {
+public class TrainerTrainingSummaryDocument {
 
     @Id
     private final String id;
@@ -24,5 +24,5 @@ public class TrainerTrainingSummaryDao {
     private final boolean trainerStatus;
 
     @Setter
-    private List<YearDao> years = new ArrayList<>();
+    private List<YearDocument> years = new ArrayList<>();
 }

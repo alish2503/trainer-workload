@@ -1,4 +1,4 @@
-package com.trainerworkload.infrastructure.persistence.dao;
+package com.trainerworkload.infrastructure.persistence.document;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +9,9 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Getter
-public class YearDao {
+public class YearDocument {
     private final int year;
 
     @Setter
-    private List<MonthDao> months = new ArrayList<>();
+    private List<MonthDocument> months = new ArrayList<>();
 }

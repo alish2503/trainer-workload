@@ -2,7 +2,7 @@ package com.trainerworkload.infrastructure.persistence.adapter;
 
 import com.trainerworkload.domain.model.TrainerWorkload;
 import com.trainerworkload.domain.port.TrainerWorkloadRepository;
-import com.trainerworkload.infrastructure.persistence.mapper.TrainerWorkloadDaoMapper;
+import com.trainerworkload.infrastructure.persistence.mapper.TrainerWorkloadDocumentMapper;
 import com.trainerworkload.infrastructure.persistence.mongorepo.TrainerTrainingSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,11 +20,11 @@ public class TrainerWorkloadRepositoryImpl implements TrainerWorkloadRepository 
 
     @Override
     public void save(TrainerWorkload trainerWorkload) {
-        repository.save(TrainerWorkloadDaoMapper.toDao(trainerWorkload));
+        repository.save(TrainerWorkloadDocumentMapper.toDao(trainerWorkload));
     }
 
     @Override
     public Optional<TrainerWorkload> findTrainerWorkloadByUsername(String username) {
-        return repository.findByTrainerUsername(username).map(TrainerWorkloadDaoMapper::toDomain);
+        return repository.findByTrainerUsername(username).map(TrainerWorkloadDocumentMapper::toDomain);
     }
 }

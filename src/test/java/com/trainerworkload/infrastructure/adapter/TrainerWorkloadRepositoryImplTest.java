@@ -2,9 +2,9 @@ package com.trainerworkload.infrastructure.adapter;
 
 import com.trainerworkload.domain.model.TrainerWorkload;
 import com.trainerworkload.infrastructure.persistence.adapter.TrainerWorkloadRepositoryImpl;
-import com.trainerworkload.infrastructure.persistence.dao.MonthDao;
-import com.trainerworkload.infrastructure.persistence.dao.TrainerTrainingSummaryDao;
-import com.trainerworkload.infrastructure.persistence.dao.YearDao;
+import com.trainerworkload.infrastructure.persistence.document.MonthDocument;
+import com.trainerworkload.infrastructure.persistence.document.TrainerTrainingSummaryDocument;
+import com.trainerworkload.infrastructure.persistence.document.YearDocument;
 import com.trainerworkload.infrastructure.persistence.mongorepo.TrainerTrainingSummaryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,9 +39,9 @@ class TrainerWorkloadRepositoryImplTest {
 
         workload.updateWorkload(2026, 1, 10, true);
         repository.save(workload);
-        ArgumentCaptor<TrainerTrainingSummaryDao> daoCaptor = ArgumentCaptor.forClass(TrainerTrainingSummaryDao.class);
+        ArgumentCaptor<TrainerTrainingSummaryDocument> daoCaptor = ArgumentCaptor.forClass(TrainerTrainingSummaryDocument.class);
         verify(mongoRepository, times(1)).save(daoCaptor.capture());
-        TrainerTrainingSummaryDao capturedDao = daoCaptor.getValue();
+        TrainerTrainingSummaryDocument capturedDao = daoCaptor.getValue();
         assertEquals("john.doe", capturedDao.getTrainerUsername());
         assertEquals("John", capturedDao.getTrainerFirstName());
         assertEquals("Doe", capturedDao.getTrainerLastName());
@@ -50,11 +50,11 @@ class TrainerWorkloadRepositoryImplTest {
 
     @Test
     void findTrainerWorkloadByUsername_shouldReturnMappedDomainObject() {
-        MonthDao month = new MonthDao(1, 20);
-        YearDao year = new YearDao(2026);
+        MonthDocument month = new MonthDocument(1, 20);
+        YearDocument year = new YearDocument(2026);
         year.setMonths(List.of(month));
 
-        TrainerTrainingSummaryDao dao = new TrainerTrainingSummaryDao("1", "john.doe",
+        TrainerTrainingSummaryDocument dao = new TrainerTrainingSummaryDocument("1", "john.doe",
                 "John", "Doe", true);
 
         dao.setYears(List.of(year));
