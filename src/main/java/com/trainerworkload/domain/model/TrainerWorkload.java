@@ -10,6 +10,7 @@ import java.util.Map;
 @Getter
 @RequiredArgsConstructor
 public class TrainerWorkload {
+    private final String id;
     private final String username;
     private final String firstName;
     private final String lastName;

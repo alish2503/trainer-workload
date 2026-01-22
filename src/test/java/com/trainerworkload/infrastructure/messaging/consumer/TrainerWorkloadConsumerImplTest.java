@@ -2,7 +2,7 @@ package com.trainerworkload.infrastructure.messaging.consumer;
 
 import com.trainerworkload.application.event.TrainerWorkloadEvent;
 import com.trainerworkload.application.service.TrainerWorkloadService;
-import com.trainerworkload.infrastructure.messaging.impl.TrainerWorkloadConsumerImpl;
+import com.trainerworkload.infrastructure.messaging.consumer.impl.TrainerWorkloadConsumerImpl;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
