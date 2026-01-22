@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface TrainerWorkloadRepository {
     void save(TrainerWorkload trainerWorkload);
-    Optional<TrainerWorkload> findByUsername(String username);
+    Optional<TrainerWorkload> findTrainerWorkloadByUsername(String username);
 }

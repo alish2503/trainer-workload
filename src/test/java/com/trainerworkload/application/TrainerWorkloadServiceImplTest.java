@@ -33,13 +33,13 @@ class TrainerWorkloadServiceImplTest {
     @Test
     void createsNewTrainerWorkloadWhenTrainerDoesNotExist() {
         TrainerWorkloadEvent event = new TrainerWorkloadEvent(
-                "trainer1", "John", "Doe", true,
+                "John.Doe", "John", "Doe", true,
                 LocalDate.of(2023, 10, 1), 1,ActionType.ADD);
 
-        when(repository.findByUsername("trainer1")).thenReturn(Optional.empty());
+        when(repository.findTrainerWorkloadByUsername("John.Doe")).thenReturn(Optional.empty());
         service.updateWorkload(event);
         verify(repository).save(argThat(workload ->
-                workload.getUsername().equals("trainer1") &&
+                workload.getUsername().equals("John.Doe") &&
                         workload.getFirstName().equals("John") &&
                         workload.getLastName().equals("Doe") &&
                         workload.isActive()
@@ -48,14 +48,14 @@ class TrainerWorkloadServiceImplTest {
 
     @Test
     void updatesExistingTrainerWorkloadWhenTrainerExists() {
-        TrainerWorkload existingWorkload = new TrainerWorkload("trainer1", "John",
+        TrainerWorkload existingWorkload = new TrainerWorkload("trainer1", "john.doe", "John",
                 "Doe", true);
 
         TrainerWorkloadEvent event = new TrainerWorkloadEvent(
-                "trainer1", "John", "Doe", true,
+                "John.Doe", "John", "Doe", true,
                 LocalDate.of(2023, 10, 1), 2, ActionType.ADD);
 
-        when(repository.findByUsername("trainer1")).thenReturn(Optional.of(existingWorkload));
+        when(repository.findTrainerWorkloadByUsername("John.Doe")).thenReturn(Optional.of(existingWorkload));
         service.updateWorkload(event);
         verify(repository).save(existingWorkload);
         assertEquals(2, existingWorkload.getMonthlySummary().get(2023).get(10));
@@ -63,15 +63,15 @@ class TrainerWorkloadServiceImplTest {
 
     @Test
     void subtractsWorkloadWhenActionTypeIsRemove() {
-        TrainerWorkload existingWorkload = new TrainerWorkload("trainer1", "John",
+        TrainerWorkload existingWorkload = new TrainerWorkload("trainer1", "John.Doe", "John",
                 "Doe", true);
 
         existingWorkload.updateWorkload(2023, 10, 3, true);
         TrainerWorkloadEvent event = new TrainerWorkloadEvent(
-                "trainer1", "John", "Doe", true,
+                "John.Doe", "John", "Doe", true,
                 LocalDate.of(2023, 10, 1), 1, ActionType.DELETE);
 
-        when(repository.findByUsername("trainer1")).thenReturn(Optional.of(existingWorkload));
+        when(repository.findTrainerWorkloadByUsername("John.Doe")).thenReturn(Optional.of(existingWorkload));
         service.updateWorkload(event);
         verify(repository).save(existingWorkload);
         assertEquals(2, existingWorkload.getMonthlySummary().get(2023).get(10));
@@ -79,19 +79,19 @@ class TrainerWorkloadServiceImplTest {
 
     @Test
     void throwsEntityNotFoundExceptionWhenTrainerDoesNotExistForMonthlyHours() {
-        when(repository.findByUsername("trainer1")).thenReturn(Optional.empty());
+        when(repository.findTrainerWorkloadByUsername("John.Doe")).thenReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, () ->
-                service.getMonthlyHours("trainer1", 2023, 10));
+                service.getMonthlyHours("John.Doe", 2023, 10));
     }
 
     @Test
     void returnsMonthlyHoursForExistingTrainer() {
-        TrainerWorkload existingWorkload = new TrainerWorkload("trainer1", "John",
+        TrainerWorkload existingWorkload = new TrainerWorkload("John.Doe", "John.Doe", "John",
                 "Doe", true);
 
         existingWorkload.updateWorkload(2023, 10, 3, true);
-        when(repository.findByUsername("trainer1")).thenReturn(Optional.of(existingWorkload));
-        int hours = service.getMonthlyHours("trainer1", 2023, 10);
+        when(repository.findTrainerWorkloadByUsername("John.Doe")).thenReturn(Optional.of(existingWorkload));
+        int hours = service.getMonthlyHours("John.Doe", 2023, 10);
         assertEquals(3, hours);
     }
 }

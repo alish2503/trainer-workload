@@ -1,4 +1,7 @@
 spring:
+  mongodb:
+    uri: mongodb://gymuser:pass@localhost:27017/gymdb?authSource=admin
+
   rabbitmq:
     host: localhost
     port: 5672
