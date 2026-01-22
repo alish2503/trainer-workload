@@ -18,8 +18,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtRequestFilter jwtRequestFilter,
-                                           TransactionIdFilter transactionIdFilter) throws Exception
-    {
+                                           TransactionIdFilter transactionIdFilter) {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

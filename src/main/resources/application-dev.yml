@@ -1,4 +1,7 @@
 spring:
+  data:
+    mongodb:
+      uri: mongodb://gym_dev:dev_pass@dev-db-host:27017/gym_dev?authSource=admin
   rabbitmq:
     host: dev-rabbit.mycompany.com
     port: 5672

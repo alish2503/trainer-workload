@@ -38,24 +38,62 @@ Key responsibilities:
 
 ---
 
-## Launch
+## MongoDB Setup (Docker Compose)
 
-1. **Configure RabbitMQ**:
+Example `docker-compose.yml`:
 
-```properties
-spring:
-    rabbitmq:
-        host: localhost
-        port: 5672
-        username: gymuser
-        password: pass
-        listener:
-            simple:
-            concurrency: 1
-            max-concurrency: 3
+```yaml
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: gym-crm-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: gymuser
+      MONGO_INITDB_ROOT_PASSWORD: pass
+      MONGO_INITDB_DATABASE: gymdb
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+
 ```
 
-2. **Run the application**:
+## Launch
+
+1. **Start MongoDB via Docker Compose**:
+
+```bash
+docker-compose up -d
+```
+
+2. **Configure RabbitMQ**:
+
+```yaml
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: gymuser
+    password: pass
+    listener:
+      simple:
+        concurrency: 1
+        max-concurrency: 3
+```
+
+3. **Configure MongoDB**:
+
+```yaml
+spring:
+  mongodb:
+    uri: mongodb://gymuser:pass@localhost:27017/gymdb?authSource=admin
+```
+
+4. **Run the application**:
 
 ```bash
 mvn spring-boot:run
@@ -140,24 +178,24 @@ Through this interface you can:
 com.trainerworkload
  ├─ application
  │   ├─ event       # Message events (TrainerWorkloadEvent)
- │   ├─ request     # helpers for handling incoming requests
  │   └─ service (impl) # Orchestrators of business use cases
  ├─ domain
  │   ├─ model       # Entities: TrainerWorkload
  │   ├─ exception   # Custom exceptions
  │   └─ port        # Repository interfaces
  ├─ infrastructure
- │   ├─ config      # RabbitMessageConverter, Security
+ │   ├─ config      # RabbitMessageConverter, Mongo, Security
  │   ├─ security    # JWT, filter
- │   ├─ logging     # Filter for transaction logging
- │   ├─ repository  # Repositories
- │   ├─ mapper      # Entity ↔ DAO mappers
  │   ├─ messaging   # Consumers, exception handlers
- │   └─ dao         # DAO classes
+ │   ├─ logging     # Filter for transaction logging
+ │   └─ persistance
+ │      ├─ adapter     # Adapters
+ │      ├─ document    # Document classes
+ │      ├─ mongorepo   # MongoRepositories
+ │      └─ mapper      # Entity ↔ Document mappers
  └─ presentation
      ├─ controller  # REST controllers
      ├─ dto         # REST response DTOs
-     ├─ mapper      # DTO ↔ Entity mappers
      └─ advice      # Global exception handling
 
 ```
@@ -187,6 +225,7 @@ mvn test
 8. Jakarta Validation 
 9. Lombok 
 10. Spring AMQP / RabbitMQ
+11. Spring Data MongoDB
 
 ---
 
@@ -194,5 +233,5 @@ mvn test
 
 1. This microservice is not user-facing.
 2. It relies on the main CRM service for event production.
-3. Persistence is abstracted and can be replaced with a database implementation.
+3. Persistence is backed by MongoDB, providing durable storage for trainer workload statistics.
 

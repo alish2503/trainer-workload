@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 @Service
 public class TrainerWorkloadServiceImpl implements TrainerWorkloadService {
@@ -22,8 +23,9 @@ public class TrainerWorkloadServiceImpl implements TrainerWorkloadService {
 
     @Override
     public void updateWorkload(TrainerWorkloadEvent event) {
-        TrainerWorkload trainerWorkload = repository.findByUsername(event.username())
+        TrainerWorkload trainerWorkload = repository.findTrainerWorkloadByUsername(event.username())
                 .orElseGet(() -> new TrainerWorkload(
+                        null,
                         event.username(),
                         event.firstName(),
                         event.lastName(),
@@ -40,9 +42,9 @@ public class TrainerWorkloadServiceImpl implements TrainerWorkloadService {
 
     @Override
     public int getMonthlyHours(String username, int year, int month) {
-        TrainerWorkload workload = repository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException(
-                "No trainer found with username: " + username
+        TrainerWorkload workload = repository.findTrainerWorkloadByUsername(username).orElseThrow(
+                () -> new EntityNotFoundException("No trainer found with username: " + username
         ));
-        return workload.getMonthlySummary().get(year).get(month);
+        return workload.getMonthlySummary().getOrDefault(year, new HashMap<>()).getOrDefault(month, 0);
     }
 }

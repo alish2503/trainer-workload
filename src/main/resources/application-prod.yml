@@ -1,4 +1,7 @@
 spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
   rabbitmq:
     host: rabbit.prod.mycompany.com
     port: 5672
