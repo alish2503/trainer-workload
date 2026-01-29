@@ -1,4 +1,4 @@
-package com.trainerworkload.infrastructure.adapter;
+package com.trainerworkload.unit.infrastructure.adapter;
 
 import com.trainerworkload.domain.model.TrainerWorkload;
 import com.trainerworkload.infrastructure.persistence.adapter.TrainerWorkloadRepositoryImpl;

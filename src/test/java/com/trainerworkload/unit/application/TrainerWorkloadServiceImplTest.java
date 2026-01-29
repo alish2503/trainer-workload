@@ -1,4 +1,4 @@
-package com.trainerworkload.application;
+package com.trainerworkload.unit.application;
 
 import com.trainerworkload.application.event.ActionType;
 import com.trainerworkload.application.event.TrainerWorkloadEvent;

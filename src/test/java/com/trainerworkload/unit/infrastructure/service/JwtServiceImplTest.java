@@ -1,4 +1,4 @@
-package com.trainerworkload.infrastructure.service;
+package com.trainerworkload.unit.infrastructure.service;
 
 import com.trainerworkload.infrastructure.security.service.impl.JwtServiceImpl;
 import io.jsonwebtoken.Jwts;

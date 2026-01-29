@@ -1,6 +1,7 @@
-package com.trainerworkload.infrastructure.messaging.handler;
+package com.trainerworkload.unit.infrastructure.messaging.handler;
 
 import com.rabbitmq.client.Channel;
+import com.trainerworkload.infrastructure.messaging.handler.TrainerWorkloadErrorHandler;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
