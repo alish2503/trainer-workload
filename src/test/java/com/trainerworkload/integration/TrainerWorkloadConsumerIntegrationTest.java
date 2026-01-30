@@ -3,7 +3,6 @@ package com.trainerworkload.integration;
 import com.trainerworkload.application.event.ActionType;
 import com.trainerworkload.application.event.TrainerWorkloadEvent;
 import com.trainerworkload.presentation.dto.response.TrainerMonthlyWorkloadDto;
-import com.trainerworkload.infrastructure.config.DisabledAuthorizationTestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,29 +11,23 @@ import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.mongodb.MongoDBContainer;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
-
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestRestTemplate
-@ActiveProfiles("no-security")
-@Import(DisabledAuthorizationTestConfig.class)
 class TrainerWorkloadConsumerIntegrationTest {
     private final TestRestTemplate testRestTemplate;
     private final RabbitTemplate rabbitTemplate;

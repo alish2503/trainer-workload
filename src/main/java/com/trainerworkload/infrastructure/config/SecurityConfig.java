@@ -15,7 +15,7 @@ import org.springframework.security.web.context.SecurityContextHolderFilter;
 
 @Configuration
 @EnableWebSecurity
-@Profile("!no-security")
+@Profile("security")
 public class SecurityConfig {
 
     @Bean

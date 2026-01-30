@@ -19,3 +19,7 @@ logging:
     org.springframework.amqp.rabbit.core.RabbitAdmin: INFO
     org.springframework.amqp.rabbit.connection: INFO
     org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler: ERROR
+
+security:
+  jwt:
+    secret: 8r7u6y5t4r3e2w1q0p9o8i7u6y5t4r3e
