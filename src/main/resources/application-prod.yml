@@ -24,3 +24,7 @@ logging:
 springdoc:
   swagger-ui:
     supported-submit-methods: []
+
+security:
+  jwt:
+    secret: 8r7u6y5t4r3e2w1q0p9o8i7u6y5t4r3e

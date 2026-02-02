@@ -239,6 +239,8 @@ mvn test
 10. Spring AMQP / RabbitMQ
 11. Spring Cloud Netflix Eureka Client 
 12. Spring Data MongoDB
+13. Testcontainers
+14. Mockito
 
 ---
 

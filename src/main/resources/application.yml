@@ -1,4 +1,11 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    group:
+      dev: security
+      stage: security
+      prod: security
   jpa:
     open-in-view: false
   application:
@@ -8,12 +15,9 @@ logging:
   pattern:
     console: "[%X{transactionId}] %d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
 
-security:
-  jwt:
-    secret: 8r7u6y5t4r3e2w1q0p9o8i7u6y5t4r3e
-
 server:
   port: 8081
 
 queue-name: "trainer-workload"
+
 dlq-name: "trainer-workload-dlq"
