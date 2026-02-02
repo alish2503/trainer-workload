@@ -1,8 +1,9 @@
-package com.trainerworkload.presentation.advice;
+package com.trainerworkload.unit.presentation.advice;
 
 
 import com.trainerworkload.domain.exception.EntityNotFoundException;
 import com.trainerworkload.application.event.ActionType;
+import com.trainerworkload.presentation.advice.GlobalExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,11 +14,13 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import tools.jackson.databind.exc.InvalidFormatException;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
 class GlobalExceptionHandlerTest {
@@ -35,6 +38,17 @@ class GlobalExceptionHandlerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertEquals("Entity not found", response.getBody().get("error"));
         assertEquals("User with id=5 not found", response.getBody().get("message"));
+    }
+
+    @Test
+    void shouldHandleMissingParams() {
+        MissingServletRequestParameterException ex = new MissingServletRequestParameterException("year", "int");
+        ResponseEntity<Map<String, String>> response = handler.handleMissingParams(ex);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        Map<String, String> body = response.getBody();
+        assertNotNull(body);
+        assertEquals("Missing required request parameter", body.get("error"));
+        assertEquals("year", body.get("message"));
     }
 
     @Test

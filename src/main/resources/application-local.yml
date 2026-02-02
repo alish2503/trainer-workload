@@ -1,7 +1,6 @@
 spring:
   mongodb:
     uri: mongodb://gymuser:pass@localhost:27017/gymdb?authSource=admin
-
   rabbitmq:
     host: localhost
     port: 5672
@@ -17,3 +16,7 @@ logging:
     org.springframework.amqp.rabbit.core.RabbitAdmin: DEBUG
     org.springframework.amqp.rabbit.connection: DEBUG
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

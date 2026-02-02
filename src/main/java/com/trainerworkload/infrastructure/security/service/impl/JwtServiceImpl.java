@@ -7,12 +7,14 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.List;
 
 @Service
+@Profile("security")
 public class JwtServiceImpl implements JwtService {
     private final JwtParser parser;
 

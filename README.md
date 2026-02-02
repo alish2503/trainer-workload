@@ -85,7 +85,17 @@ spring:
         max-concurrency: 3
 ```
 
-3. **Configure MongoDB**:
+3. **Configure Eureka**:
+
+```yaml
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+```
+
+4. **Configure MongoDB**:
 
 ```yaml
 spring:
@@ -93,7 +103,7 @@ spring:
     uri: mongodb://gymuser:pass@localhost:27017/gymdb?authSource=admin
 ```
 
-4. **Run the application**:
+5. **Run the application**:
 
 ```bash
 mvn spring-boot:run
@@ -106,6 +116,7 @@ This microservice **consumes trainer workload events asynchronously** from the G
 - Messages are sent in **JSON format** and represent training add/remove events.
 - Dead Letter Queue (DLQ) is used for messages with missing or invalid information.
 - Each message carries a `transactionId` for distributed tracing across microservices.
+- The service is discovered via **Eureka**
 - Optional GET endpoints can be called by authorized services using a **JWT service token** to retrieve aggregated trainer workload data.
 
 ---
@@ -204,8 +215,9 @@ com.trainerworkload
 
 ## Testing
 
-1. Unit tests with **JUnit 5** covering services, repositories, and controllers.
-2. Run tests via:
+1. **Unit tests (JUnit 5)** covering core services, repositories, and controllers.
+2. **Integration tests** verifying interaction with external infrastructure components such as **RabbitMQ**.
+3. Run tests via:
 
 ```bash
 mvn test
@@ -225,7 +237,10 @@ mvn test
 8. Jakarta Validation 
 9. Lombok 
 10. Spring AMQP / RabbitMQ
-11. Spring Data MongoDB
+11. Spring Cloud Netflix Eureka Client 
+12. Spring Data MongoDB
+13. Testcontainers
+14. Mockito
 
 ---
 

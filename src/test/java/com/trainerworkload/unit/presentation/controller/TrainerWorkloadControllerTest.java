@@ -1,4 +1,4 @@
-package com.trainerworkload.presentation.controller;
+package com.trainerworkload.unit.presentation.controller;
 
 import com.trainerworkload.application.service.TrainerWorkloadService;
 import com.trainerworkload.presentation.controller.impl.TrainerWorkloadController;
