@@ -3,8 +3,7 @@ spring:
     mongodb:
       uri: ${MONGO_URI}
   rabbitmq:
-    host: rabbit.prod.mycompany.com
-    port: 5672
+    addresses: amqp://rabbit.prod.mycompany.com
     username: produser
     password: prodpass
     listener:
