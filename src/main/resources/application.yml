@@ -1,4 +1,10 @@
 spring:
+  profiles:
+    group:
+      local: integration
+      dev: security, integration
+      stage: security, integration
+      prod: security, integration
   jpa:
     open-in-view: false
   application:
